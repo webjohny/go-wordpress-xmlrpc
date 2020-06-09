@@ -4,12 +4,12 @@ import (
 	"time"
 )
 
-type Post struct {
-	BlogID int
-	PostContent
+type Category struct {
+	CatID int
+	PostCategory
 }
 
-type PostContent struct {
+type PostCategory struct {
 	PostType      string `xmlrpc:"post_type"`
 	PostStatus    string `xmlrpc:"post_status"`
 	PostTitle     string `xmlrpc:"post_title"`
@@ -30,41 +30,18 @@ type PostContent struct {
 	Enclosure  Enclosure  `xmlrpc:"enclosure"`
 }
 
-type Terms struct {
-	TermID         string `xmlrpc:"term_id"`
-	TermGroup      string `xmlrpc:"term_group"`
-	Taxonomy       string `xmlrpc:"taxonomy"`
-	TermTaxonomyID int    `xmlrpc:"term_taxonomy_id"`
-	Name           string `xmlrpc:"name"`
-	Slug           string `xmlrpc:"slug"`
-	Description    string `xmlrpc:"description"`
-	Parent         string `xmlrpc:"parent"`
-	Count          int    `xmlrpc:"count"`
+func (c Category) GetMethod() string {
+	return `wp.newTerm`
 }
 
-type TermsNames struct {
-	PostCategory []string `xmlrpc:"category"`
-	TagsInput    []string `xmlrpc:"post_tag"`
-}
-
-type Enclosure struct {
-	Url    string `xmlrpc:"url"`
-	Length int    `xmlrpc:"length"`
-	Type   string `xmlrpc:"type"`
-}
-
-func (p Post) GetMethod() string {
-	return `wp.newPost`
-}
-
-func (p Post) GetArgs(user string, pwd string) interface{} {
+func (c Category) GetArgs(user string, pwd string) interface{} {
 	args := make([]interface{}, 4)
-	args = append(args, p.BlogID, user, pwd, p.PostContent)
+	args = append(args, c.CatID, user, pwd, c.PostCategory)
 	return args
 }
 
-func NewPost(content string, title string, tags []string, cate []string) (p Post) {
-	p.PostContent = PostContent{
+func GetCatById(content string, title string, tags []string, cate []string) (c Category) {
+	c.PostCategory = PostCategory{
 		PostType:    `post`,
 		PostStatus:  `publish`,
 		PostTitle:   title,
@@ -75,11 +52,11 @@ func NewPost(content string, title string, tags []string, cate []string) (p Post
 			TagsInput:    tags,
 		},
 	}
-	return p
+	return c
 }
 
 // NewSpecificPost Customize various values by yourself
-func NewSpecificPost(content PostContent) (p Post) {
-	p.PostContent = content
-	return p
+func NewSpecificCategory(content PostCategory) (c Category) {
+	c.PostCategory = content
+	return c
 }

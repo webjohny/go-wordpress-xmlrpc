@@ -1,6 +1,6 @@
 package wordpress
 
 type BaseCall interface {
-	GetMethord() string
+	GetMethod() string
 	GetArgs(user string, pwd string) interface{}
 }

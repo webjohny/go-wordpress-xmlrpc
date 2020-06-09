@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/abcdsxg/go-wordpress-xmlrpc/wordpress"
 	"github.com/kolo/xmlrpc"
+	"github.com/webjohny/go-wordpress-xmlrpc/wordpress"
 )
 
 type HttpRT struct {
@@ -68,6 +68,6 @@ func NewCustomizeClient(url string, t http.RoundTripper, info UserInfo) (*Client
 
 // Call abstract to proxy xmlrpc call
 func (c *Client) Call(baseCall wordpress.BaseCall) (result interface{}, err error) {
-	err = c.Client.Call(baseCall.GetMethord(), baseCall.GetArgs(c.Username, c.Password), &result)
+	err = c.Client.Call(baseCall.GetMethod(), baseCall.GetArgs(c.Username, c.Password), &result)
 	return result, err
 }
