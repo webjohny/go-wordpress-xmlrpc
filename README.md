@@ -4,7 +4,8 @@ An implementation of the standard WordPress API methods is provided,Use the [htt
 
 # Todo List
 - [x] [wp.newPost](#wp.newPost)
-- [ ] wp.getCatById
+- [x] wp.newTerm
+- [ ] wp.getTerms
 - [ ] wp.getPost
 - [ ] wp.getPosts
 - [ ] wp.editPost
